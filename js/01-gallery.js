@@ -25,8 +25,14 @@ function onPictureClick (event) {
     return
   }
   
-  const picSrc = event.target.dataset.source;
-  console.log(picSrc);
-  const instance = basicLightbox.create(`<img src=${picSrc}>`);
+  const instance = basicLightbox.create(`<img src="${event.target.dataset.source}" width="800" height="600">`);
   instance.show();
+  if (instance.visible) {
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        instance.close();
+      }
+    }, {once: true});
+  }
+  
 };
