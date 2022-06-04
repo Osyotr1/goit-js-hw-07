@@ -6,9 +6,9 @@ console.log(galleryItems);
 const galleryList = document.querySelector('.gallery');
 
 const galleryEl = galleryItems.map((item) => 
-   `<a class="gallery__item" href=${item.original}>
+   `<a class="gallery__item" href="${item.original}">
     <img class="gallery__image"
-      src=${item.preview}
+      src="${item.preview}"
       alt="${item.description}"
     />
   </a>`
