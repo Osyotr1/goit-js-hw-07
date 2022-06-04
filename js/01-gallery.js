@@ -19,20 +19,29 @@ galleryList.insertAdjacentHTML('afterbegin', galleryEl);
 
 galleryList.addEventListener('click', onPictureClick)
 
-function onPictureClick (event) {
+let instance = {};
+
+ 
+function onPictureClick(event) {
   event.preventDefault();
   if (event.target.nodeName !== 'IMG') {
     return
   }
-  
-  const instance = basicLightbox.create(`<img src="${event.target.dataset.source}" width="800" height="600">`);
-  instance.show();
-  if (instance.visible) {
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        instance.close();
-      }
-    }, {once: true});
-  }
+
+  const options = {
+    onClose: (instance) => {
+      document.removeEventListener('keydown', onEscapePress)
+    }
+  };
+
+
+  instance = basicLightbox.create(`<img src="${event.target.dataset.source}" width="800" height="600">`, options)
+  instance.show(document.addEventListener('keydown', onEscapePress));
   
 };
+
+function onEscapePress(e) {
+  if (e.key === 'Escape') {
+    instance.close(document.removeEventListener('keydown', onEscapePress));
+  }
+}
